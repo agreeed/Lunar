@@ -7,6 +7,7 @@ function module:GetService(serviceName)
 	for i, v in pairs(game:GetChildren()) do
 		if v.ClassName == serviceName then
 			service = v
+			break
 		end
 	end
 	
@@ -21,6 +22,51 @@ function module:GetLocalScreenGui()
 	assert("Invalid script context")
 	
 	return player.PlayerGui
+end
+
+function module:FindFirstDescendant(where, name)
+	assert(where, "Argument 1 missing or nil")
+	assert(name, "Argument 2 missing or nil")
+	local found
+	
+	for i, v in pairs(where:GetDescendants()) do
+		if v.Name == name then
+			found = v
+			break
+		end
+	end
+	
+	return found
+end
+
+function module:QueryDescendants(where, query)
+	assert(where, "Argument 1 missing or nil")
+	assert(query, "Argument 1 missing or nil")
+	local found
+
+	for i, v in pairs(where:GetDescendants()) do
+		if query(v) then
+			found = v
+			break
+		end
+	end
+
+	return found
+end
+
+function module:QueryChildren(where, query)
+	assert(where, "Argument 1 missing or nil")
+	assert(query, "Argument 1 missing or nil")
+	local found
+
+	for i, v in pairs(where:GetChildren()) do
+		if query(v) then
+			found = v
+			break
+		end
+	end
+
+	return found
 end
 
 return module
