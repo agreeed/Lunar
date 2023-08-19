@@ -41,11 +41,11 @@ end
 
 function module:QueryDescendant(where: Instance, query: (Instance) -> (boolean)): Instance?
 	assert(where, "Argument 1 missing or nil")
-	assert(query, "Argument 1 missing or nil")
+	assert(query, "Argument 2 missing or nil")
 	local found
 
 	for i, v in pairs(where:GetDescendants()) do
-		if query(v) then
+		if query(v) == true then
 			found = v
 			break
 		end
@@ -56,13 +56,12 @@ end
 
 function module:QueryDescendants(where: Instance, query: (Instance) -> (boolean)): {Instance?}
 	assert(where, "Argument 1 missing or nil")
-	assert(query, "Argument 1 missing or nil")
+	assert(query, "Argument 2 missing or nil")
 	local found = {}
 
 	for i, v in pairs(where:GetDescendants()) do
-		if query(v) then
+		if query(v) == true then
 			table.insert(found, v)
-			break
 		end
 	end
 
@@ -71,11 +70,11 @@ end
 
 function module:QueryChild(where: Instance, query: (Instance) -> (boolean)): Instance?
 	assert(where, "Argument 1 missing or nil")
-	assert(query, "Argument 1 missing or nil")
+	assert(query, "Argument 2 missing or nil")
 	local found
 
 	for i, v in pairs(where:GetChildren()) do
-		if query(v) then
+		if query(v) == true then
 			found = v
 			break
 		end
@@ -86,13 +85,12 @@ end
 
 function module:QueryChildren(where: Instance, query: (Instance) -> (boolean)): {Instance?}
 	assert(where, "Argument 1 missing or nil")
-	assert(query, "Argument 1 missing or nil")
+	assert(query, "Argument 2 missing or nil")
 	local found = {}
 
 	for i, v in pairs(where:GetChildren()) do
-		if query(v) then
+		if query(v) == true then
 			table.insert(found, v)
-			break
 		end
 	end
 
