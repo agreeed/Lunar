@@ -1,6 +1,6 @@
 local module = {}
 
-function module:GetService(serviceName)
+function module:GetService(serviceName): Service?
 	assert(serviceName, "Argument 1 missing or nil")
 	local service
 	
@@ -17,14 +17,14 @@ function module:GetService(serviceName)
 	return service
 end
 
-function module:GetLocalScreenGui()
+function module:GetLocalScreenGui(): PlayerGui?
 	local player = game:GetService('Players').LocalPlayer
 	assert("Invalid script context")
 	
 	return player.PlayerGui
 end
 
-function module:FindFirstDescendant(where, name)
+function module:FindFirstDescendant(where, name): Instance?
 	assert(where, "Argument 1 missing or nil")
 	assert(name, "Argument 2 missing or nil")
 	local found
@@ -39,7 +39,7 @@ function module:FindFirstDescendant(where, name)
 	return found
 end
 
-function module:QueryDescendants(where, query)
+function module:QueryDescendant(where: Instance, query: (Instance) -> (boolean)): Instance?
 	assert(where, "Argument 1 missing or nil")
 	assert(query, "Argument 1 missing or nil")
 	local found
@@ -54,7 +54,22 @@ function module:QueryDescendants(where, query)
 	return found
 end
 
-function module:QueryChildren(where, query)
+function module:QueryDescendants(where: Instance, query: (Instance) -> (boolean)): {Instance?}
+	assert(where, "Argument 1 missing or nil")
+	assert(query, "Argument 1 missing or nil")
+	local found = {}
+
+	for i, v in pairs(where:GetDescendants()) do
+		if query(v) then
+			table.insert(found, v)
+			break
+		end
+	end
+
+	return found
+end
+
+function module:QueryChild(where: Instance, query: (Instance) -> (boolean)): Instance?
 	assert(where, "Argument 1 missing or nil")
 	assert(query, "Argument 1 missing or nil")
 	local found
@@ -62,6 +77,21 @@ function module:QueryChildren(where, query)
 	for i, v in pairs(where:GetChildren()) do
 		if query(v) then
 			found = v
+			break
+		end
+	end
+
+	return found
+end
+
+function module:QueryChildren(where: Instance, query: (Instance) -> (boolean)): {Instance?}
+	assert(where, "Argument 1 missing or nil")
+	assert(query, "Argument 1 missing or nil")
+	local found = {}
+
+	for i, v in pairs(where:GetChildren()) do
+		if query(v) then
+			table.insert(found, v)
 			break
 		end
 	end
