@@ -70,8 +70,6 @@ function module:Create(tree: {}): {Instance}
 		end
 
 		parseProperties(newObject, doneTree, properties)
-		
-		print("NEW OBJECT;", "PARENT:", newObject.Parent, "FULLNAME:", newObject:GetFullName(), "CLASS:", newObject.ClassName)
 	end
 	
 	return doneTree
